@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria_Merida_2.0", "Papeleria_Merida_2.0\Papeleria_Merida_2.0.csproj", "{DB0E36AF-348D-47B6-BCA2-89D29AD2246D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PapeAdmin", "PapeAdmin\PapeAdmin.csproj", "{41E748EE-A9AE-4345-A93F-1ECB682CE7B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB0E36AF-348D-47B6-BCA2-89D29AD2246D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0E36AF-348D-47B6-BCA2-89D29AD2246D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0E36AF-348D-47B6-BCA2-89D29AD2246D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0E36AF-348D-47B6-BCA2-89D29AD2246D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E748EE-A9AE-4345-A93F-1ECB682CE7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E748EE-A9AE-4345-A93F-1ECB682CE7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E748EE-A9AE-4345-A93F-1ECB682CE7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E748EE-A9AE-4345-A93F-1ECB682CE7B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14B866A8-F9D2-4472-99AB-8AE0213691D4}
+	EndGlobalSection
+EndGlobal

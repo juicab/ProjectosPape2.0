@@ -1,0 +1,45 @@
+﻿@using System.Data;
+@model DataTable
+
+
+<div class="container-fluid">
+    <div class="row m-t-30">
+        <div class="col-md-12">
+            <!-- DATA TABLE-->
+            <div class="table-responsive m-b-40">
+                <table class="table table-borderless table-data3">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Titulo1/Superior</th>
+                            <th>Titulo2/Posterior</th>
+                            <th>Imagen</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow item in Model.Rows)
+                        {
+                            <tr id="fila_@item["idCarusel"]">
+                                <td id="idCarusel" name="idCarusel">@item["idCarusel"]</td>
+                                <td id="tit1" name="tit1">@item["titulo1"]</td>
+                                <td id="tit2"name="tit2">@item["titulo2"]</td>
+                                <td class="process"><img style="width: 150px; height: 100px" src="~/images/Carusel/@item["urlCarusel"]" /></td>
+                                <td>
+                                    <button type="reset"class="btn btn-primary btn-sm">
+                                        <i class="fa fa-pencil-square-o"></i> Editar
+                                    </button>
+                                    <button type="reset" onclick="eliminar(@item["idCarusel"]); return false" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash"></i> Eliminar
+                                    </button>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- END DATA TABLE-->
+        </div>
+    </div>
+</div>

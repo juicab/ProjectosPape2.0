@@ -1,0 +1,227 @@
+﻿.contact-section .box {
+    width: 100%;
+    display: block;
+    background: #31de79;
+    color: #000;
+    background: #9ff669;
+    background: -moz-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, #9ff669), color-stop(100%, #31de79));
+    background: -webkit-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -ms-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+
+    background: linear-gradient(135deg, #1ecdf1 0%, #1eaaf1 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ff669', endColorstr='#31de79', GradientType=1 );
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 991.98px) {
+    .contact-section .box {
+        margin-bottom: 30px;
+    }
+}
+
+.contact-section .box .icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    margin-bottom: 2em;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}
+
+    .contact-section .box .icon span {
+        color: #fff;
+        font-size: 30px;
+    }
+
+.contact-section .box h3 {
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+}
+
+
+
+/*-----------------------------------------------------------------------------------*/
+
+.contact-section .box1 {
+    width: 100%;
+    display: block;
+    background: #31de79;
+    color: #000;
+    background: #9ff669;
+    background: -moz-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, #9ff669), color-stop(100%, #31de79));
+    background: -webkit-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -ms-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+
+    background: linear-gradient(135deg, #cdee00 0%, #91EE00 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ff669', endColorstr='#31de79', GradientType=1 );
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 991.98px) {
+    .contact-section .box1 {
+        margin-bottom: 30px;
+    }
+}
+
+.contact-section .box1 .icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    margin-bottom: 2em;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}
+
+    .contact-section .box1 .icon span {
+        color: #fff;
+        font-size: 30px;
+    }
+
+.contact-section .box1 h3 {
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/*----------------------------------------------------------------------*/
+
+.contact-section .box2 {
+    width: 100%;
+    display: block;
+    background: #31de79;
+    color: #000;
+    background: #9ff669;
+    background: -moz-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, #9ff669), color-stop(100%, #31de79));
+    background: -webkit-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -ms-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+
+    background: linear-gradient(135deg, #4052bf 0%, #4e40bf 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ff669', endColorstr='#31de79', GradientType=1 );
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 991.98px) {
+    .contact-section .box2 {
+        margin-bottom: 30px;
+    }
+}
+
+.contact-section .box2 .icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    margin-bottom: 2em;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.contact-section .box2 .icon span {
+    color: #fff;
+    font-size: 30px;
+}
+
+.contact-section .box2 h3 {
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/*------------------------------------------------------------------------*/
+.contact-section .box3 {
+    width: 100%;
+    display: block;
+    background: #31de79;
+    color:#000;;
+    background: #9ff669;
+    background: -moz-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, #9ff669), color-stop(100%, #31de79));
+    background: -webkit-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -o-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -ms-linear-gradient(-45deg, #9ff669 0%, #31de79 100%);
+    background: -webkit-linear-gradient(315deg, #ef2750 0%, #EF3027 100%);
+    background: -o-linear-gradient(315deg, #9ff669 0%, #31de79 100%);
+
+    background: linear-gradient(135deg, #ef6227 0%, #ef3027 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ff669', endColorstr='#31de79', GradientType=1 );
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 42px 29px -31px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 991.98px) {
+    .contact-section .box3 {
+        margin-bottom: 30px;
+    }
+}
+
+.contact-section .box3 .icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    margin-bottom: 2em;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}
+
+    .contact-section .box3 .icon span {
+        color: #fff;
+        font-size: 30px;
+    }
+
+.contact-section .box3 h3 {
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+}
+

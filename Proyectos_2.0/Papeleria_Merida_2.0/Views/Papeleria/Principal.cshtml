@@ -1,0 +1,79 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="~/Style/js/jquery-3.2.1.min.js" ></script>
+
+
+<section id="home-section" class="hero">
+    <h3 class="vr">BIENVENIDO A PAPELERÍA MÉRIDA</h3>
+    <div id="cuerpo" class="home-slider js-fullheight owl-carousel">
+        <div class="slider-item js-fullheight">
+            <div class="overlay"></div>
+            <div class="container-fluid p-0">
+                <div class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+                    <div class="one-third order-md-last img js-fullheight" style="background-image:url(../../Style/images/bg_1.jpg);">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                        <div class="text">
+                            <h1 class="mb-4 mt-3">Small Details Make A Big <span>Impression</span></h1>
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-item js-fullheight">
+            <div class="overlay"></div>
+            <div class="container-fluid p-0">
+                <div class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+                    <div class="one-third order-md-last img js-fullheight" style="background-image:url(../../Style/images/bg_2.jpg);">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                        <div class="text">
+                            <span class="subheading">Welcome to the digilab</span>
+                            <h1 class="mb-4 mt-3"><span>Strategic</span> Design And <span>Technology</span> Agency</h1>
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function tabla() {
+        $.ajax({
+            url: "/Papeleria/tablaPrincipal",
+            type: "POST",
+            data: false, contentType: false, processData: false, async: false,
+            success: function (result) {
+                console.log(result);
+                $("#cuerpo").empty();
+                for (var i = 0; i < result.listPrin.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + result.listPrin[i].idPrincipal + "</td>");
+                    tr.append("<td>" + result.listPrin[i].titulo1 + "</td>");
+                    tr.append("<td>" + result.listPrin[i].negrita + "</td>");
+                    tr.append("<td class='process'><img style='width: 120px; height: 120px' src='../images/Principal/" + result.listPrin[i].imagen + "'/></td>");
+                    tr.append("<td class='justify-content-center'><button type='reset' onclick='return false' class='btn btn-primary btn-sm'><i class='fa fa-pencil-square-o'></i>&nbsp;Editar</button>" + "&nbsp;&nbsp;&nbsp;" +
+                        "<button type='reset' return false' class='btn btn-danger btn-sm'><i class='fa fa-trash'></i>&nbsp;Eliminar</button>")
+                    $("#cuerpo").append(tr);
+                }
+                for (var i = 0; i < result.listPrin.length; i++) {
+
+                }
+
+
+
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+    };
+    $(document).ready(function () {
+        tabla();
+    });
+
+</script>

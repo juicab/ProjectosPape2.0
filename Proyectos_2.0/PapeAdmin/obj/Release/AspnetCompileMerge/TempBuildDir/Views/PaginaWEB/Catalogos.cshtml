@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Catalogos";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Página WEB > Actualizacion de Catálogos
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-2">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="text-input" name="text-input" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Nombre del Catálogo</small>
+                                        <input disabled type="text" id="text-input" name="text-input" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <small style="font-size:medium;" class="form-text text-muted">Fecha de Actualización</small>
+                                        <input disabled type="text" id="text-input" name="text-input" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Archivo .PDF</small>
+                                        <input type="file" id="file-input" name="file-input" class="form-control-file" onchange="PreviewImage(event)">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <img style="width: 250px; height: 200px" id="PreviewImageID" src="~/Style/images/upload-file.png">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-floppy-o"></i> Guardar
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha de Actualización</th>
+                                    <th>Estatus</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>Mobile</td>
+                                    <td>iPhone X 64Gb Grey</td>
+                                    <td class="process">Processed</td>
+                                    <td>$999.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

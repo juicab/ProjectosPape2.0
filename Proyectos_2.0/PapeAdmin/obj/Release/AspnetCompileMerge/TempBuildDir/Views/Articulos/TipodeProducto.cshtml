@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "TipodeProducto";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Ubicación > Estado
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-3">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="text-input" name="text-input" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <small style="font-size:medium;" class="form-text text-muted">Tipo de Producto</small>
+                                        <input type="text" id="text-input" name="text-input" class="form-control">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-floppy-o"></i> Guardar
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Tipo de Producto</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>Mobile</td>
+                                    <td>$999.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,371 @@
+﻿@{
+    ViewBag.Title = "Carusel";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+<script src="~/Style/vendor/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<div id="principal" class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Página WEB > Carusel
+                        </div>
+                        <form id="formulario" name="formulario" action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-2">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="cod" name="cod" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Título Primera Line(Opcional)</small>
+                                        <input type="text" id="tit1" name="tit1" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Título Negritas(Opcional)</small>
+                                        <input type="text" id="negri" name="negri" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Descripción</small>
+                                        <textarea name="descri" id="descri" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-8">
+                                        <small style="font-size:medium;" class="form-text text-muted">Imagen del Carusel</small>
+                                        <input type="file" accept="image/*" id="imagen" name="imagen" class="form-control-file" onchange="PreviewImage(event)">
+                                    </div>
+                                    <br />
+                                    <div class="col-12 col-md-4">
+                                        <img style="width: 250px; height: 200px" id="PreviewImageID" src="../Style/images/picture.png">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <button id="btn-enviar" type="button" class="btn btn-success btn-sm">
+                                    <i class="fa fa-floppy-o"></i> Guardar
+                                </button>
+                                <button id="btn-cancel" type="button" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Cancelar
+                                </button>
+                                @*<input type="button" class="btn btn-primary btn-sm" value="Guardar"/>*@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @*Tabla para llenar con Ajax JavaScript*@
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th style="">Código</th>
+                                    <th>Titulo1/Superior</th>
+                                    <th>Titulo2/Posterior</th>
+                                    <th>Imagen</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align:left;" id="cuerpo">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function PreviewImage(event) {
+        var output = document.getElementById('PreviewImageID');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        var ruta = URL.createObjectURL(event.target.files[0]);
+
+    };
+    function eliminar(id) {
+        var men = "Si eliminas esta información no podras recuperarla" + "El codigo es:" + id;
+        swal({
+            title: "¿ Estas seguro(a) ?",
+            text: men,
+            icon: "warning",
+            buttons: ["Calcelar", true],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var dataString = new FormData();
+                    dataString.append("id", id)
+                    $.ajax({
+                        url: "/PaginaWEB/eliminarCarusel",
+                        type: "POST", data: dataString, contentType: false, processData: false, async: false,
+                        success: function (respuesta) {
+                            if (typeof (respuesta.Value) != "undefined") {
+                                if (respuesta.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = respuesta.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (respuesta.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error regresa en Success no es definido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                    //swal("Listo! La información se ha elimado con éxito!", {
+                    //    icon: "success",
+                    //});
+                } else {
+                    swal("Se ha detenido la eliminacion!", {
+                        icon: "info",
+                    });
+                }
+            });
+    };
+    function limpiarCampos() {
+        var imgantiguo = "../Style/images/picture.png"
+        var output = document.getElementById('PreviewImageID');
+        output.src = imgantiguo;
+        $("#formulario")[0].reset();
+    };
+    function tabla() {
+        $.ajax({
+            url: "/PaginaWEB/tablaPrincipal",
+            type: "POST",
+            data: false, contentType: false, processData: false, async: false,
+            success: function (result) {
+                $("#cuerpo").empty();
+                for (var i = 0; i < result.listPrin.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + result.listPrin[i].idPrincipal + "</td>");
+                    tr.append("<td>" + result.listPrin[i].titulo1 + "</td>");
+                    tr.append("<td>" + result.listPrin[i].negrita + "</td>");
+                    tr.append("<td class='process'><img style='width: 120px; height: 120px' src='../images/Principal/" + result.listPrin[i].imagen + "'/></td>");
+                    tr.append("<td class='justify-content-center'><button type='reset' onclick='return false' class='btn btn-primary btn-sm'><i class='fa fa-pencil-square-o'></i>&nbsp;Editar</button>" + "&nbsp;&nbsp;&nbsp;" +
+                        "<button type='reset' return false' class='btn btn-danger btn-sm'><i class='fa fa-trash'></i>&nbsp;Eliminar</button>")
+                    $("#cuerpo").append(tr);
+                }
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+    };
+    function seleccionar(id) {
+        var dataString = new FormData();
+        dataString.append("id", id)
+        $.ajax({
+            url: "/PaginaWEB/obtenerPrincipal",
+            type: "POST",
+            data: dataString, contentType: false, processData: false, async: false,
+            success: function (result) {
+                var codigo = result.listPrin[0].idPrincipal;
+                var titu1 = result.listPrin[0].titulo1;
+                var negri = result.listPrin[0].negrita;
+                var descrip = result.listPrin[0].descripcion;
+                var url = "../images/Principal/" + result.listPrin[0].imagen;
+                var pic = document.getElementById('PreviewImageID');
+                $("#cod").val(codigo);
+                $("#tit1").val(titu1);
+                $("#negri").val(negri);
+                $("#descri").val(descrip);
+                pic.src = url;
+                $('html,body').animate({
+                    scrollTop: $("#principal").offset().top
+                }, 1000)
+
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+
+    };
+    $(document).ready(function () {
+        tabla();
+        $("#btn-enviar").click(function () {
+            var imgselect = ($("#imagen"))[0].files[0];
+            var ti1 = ($("#tit1").val());
+            var negri = ($("#negri").val());
+            var descri = ($("#descri").val());
+            var codi = ($("#cod").val());
+            if (codi.length != 0) {
+                //si codigo tiene datos es modificacion
+                if (!imgselect) {
+                    //Modificar sin imagen
+                    var dataString = new FormData();
+                    dataString.append("tit1", ti1);
+                    dataString.append("tit2", ti2);
+                    dataString.append("id", codi);
+                    $.ajax({
+                        url: "/PaginaWEB/cambiarSinUrl",
+                        type: "POST",
+                        data: dataString,
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        success: function (data) {
+                            if (typeof (data.Value) != "undefined") {
+                                if (data.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = data.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (data.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error Definido Data.Value=nodefinido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                }
+                else {
+                    //Modificar con imagen
+                    var dataString = new FormData();
+                    dataString.append("imagen", imgselect)
+                    dataString.append("tit1", ti1);
+                    dataString.append("tit2", ti2);
+                    dataString.append("id", codi);
+                    $.ajax({
+                        url: "/PaginaWEB/cambiarConUrl",
+                        type: "POST",
+                        data: dataString,
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        success: function (data) {
+                            if (typeof (data.Value) != "undefined") {
+                                if (data.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = data.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (data.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error Definido Data.Value=nodefinido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                }
+            }
+            else {
+                //Si el codigo esta vacio es nuevo dato
+                if (!imgselect) {
+                    swal("Ops", "No se ha seleccionado ninguna imagen", "info");
+                }
+                else {
+                    //obtener datos a enviar(archivo seleccionado)
+                    //var imgselect = ($("#imagen"))[0].files[0];
+                    var dataString = new FormData();
+                    dataString.append("imagen", imgselect)
+                    dataString.append("tit1", ti1);
+                    dataString.append("negrita", negri);
+                    dataString.append("descrip", descri);
+                    $.ajax({
+                        url: "/PaginaWEB/nuevoPrincipal",
+                        type: "POST",
+                        data: dataString,
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        success: function (data) {
+                            if (typeof (data.Value) != "undefined") {
+                                if (data.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = data.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (data.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error Definido Data.Value=nodefinido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                }
+            }
+
+
+        });
+
+        $("#btn-cancel").click(function () {
+            limpiarCampos();
+        });
+    });
+</script>
+

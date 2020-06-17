@@ -1,0 +1,337 @@
+﻿
+@{
+    ViewBag.Title = "Marca";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+<script src="~/Style/vendor/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+
+<div id="principal" class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Página WEB > Marcas / Proveedores
+                        </div>
+                        <form id="formulario" action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-2">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="cod" name="cod" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-10">
+                                        <small style="font-size:medium;" class="form-text text-muted">Nombre</small>
+                                        <input type="text" id="nombre" name="nombre" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Slogan/Frase</small>
+                                        <input type="text" id="frase" name="frase" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Descripción</small>
+                                        <textarea name="descripcion" id="descripcion" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Imagen del Logo</small>
+                                        <input type="file" id="logo" accept="image/*" name="logo" class="form-control-file" onchange="PreviewImage(event)">
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <img style="width: 250px; height: 200px" id="PreviewImageLogo" src="~/Style/images/picture.png">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Imagen del Banner</small>
+                                        <input type="file" accept="image/*" id="banner" name="banner" class="form-control-file" onchange="PreviewImagen2(event)">
+                                    </div>
+                                    <div class="col-12 col-md-7">
+                                        <img style="width: 650px; height: 250px" id="PreviewImageID" src="~/Style/images/picture.png">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <div class="progress mb-3">
+                                            <div id="progreso" class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                                 role="progressbar" style="width:0%;">
+                                                100%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" id="btn-enviar" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-floppy-o"></i> Guardar
+                                </button>
+                                <button type="button" id="btn-cancel" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Estatus</th>
+                                    <th>Logo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpo">
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>Mobile</td>
+                                    <td>iPhone X 64Gb Grey</td>
+                                    <td class="process">Processed</td>
+                                    <td>$999.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function PreviewImage(event) {
+        var output = document.getElementById('PreviewImageLogo');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+    function PreviewImagen2(event) {
+        var output = document.getElementById('PreviewImageID');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+    function tabla() {
+        $.ajax({
+            url: "/Articulos/tablaMarcas",
+            type: "POST",
+            data: false, contentType: false, processData: false, async: false,
+            success: function (result) {
+                $("#cuerpo").empty();
+                for (var i = 0; i < result.listMarcas.length; i++) {
+                    var stat;
+                    var txt;
+                    var btn;
+                    var icon;
+                    var color;
+                    var clase;
+                    if (result.listMarcas[i].statusMarca == 1) {
+                        stat = "Activo";
+                        txt = "Desactivar";
+                        btn = "danger";
+                        icon = "fa-times";
+                        color = "process";
+                        clase = "";
+
+                    } else {
+                        stat = "Inactivo";
+                        txt = "&nbsp;&nbsp;Activar&nbsp;&nbsp;&nbsp;&nbsp;";
+                        btn = "success";
+                        icon = "fa-check";
+                        color = "";
+                        clase = "status--denied";
+                    }
+                    tr = $('<tr/>');
+                    tr.append("<td>" + result.listMarcas[i].idMarca + "</td>");
+                    tr.append("<td>" + result.listMarcas[i].nomMarca + "</td>");
+                    tr.append("<td class='" + color + "'><span class='" + clase + "'>" + stat + "</span></td>");
+                    tr.append("<td><img style='width: 100px; height: 100px' src='../images/Marcas/" + result.listMarcas[i].logoMarca + "'/></td>");
+                    //Botones
+                    tr.append("<td style='text-align:right;' class='justify-content-center'><button type='reset' onclick='seleccionar(" + result.listMarcas[i].idMarca + "); return false'  class='btn btn-primary btn-sm'><i class='fa fa-pencil-square-o'></i>&nbsp;Editar</button>" + "&nbsp;&nbsp;&nbsp;" +
+                        "<button type='reset' onclick='Eliminar(" + result.listMarcas[i].idMarca + "," + result.listMarcas[i].statusMarca + "); return false' class='btn btn-" + btn + " btn-sm'><i class='fa " + icon + "'></i>&nbsp;" + txt + "</button>");
+                    $("#cuerpo").append(tr);
+                }
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+    };
+    function seleccionar(id) {
+        var dataString = new FormData();
+        dataString.append("id", id)
+        $.ajax({
+            url: "/Articulos/SeleccionarMarca",
+            type: "POST",
+            data: dataString, contentType: false, processData: false, async: false,
+            success: function (result) {
+                var cod = result.listMarcas[0].idMarca;
+                var nom = result.listMarcas[0].nomMarca;
+                var desc = result.listMarcas[0].descMarca;
+                var slogan = result.listMarcas[0].sloganMarca;
+                var logo ="../images/Marcas/"+ result.listMarcas[0].logoMarca;
+                var banner = "../images/Banners/" + result.listMarcas[0].bannerMarca;
+                $("#cod").val(cod);
+                $("#nombre").val(nom);
+                $("#descripcion").val(desc);
+                $("#frase").val(slogan);
+                var imgBanner = document.getElementById('PreviewImageID');
+                imgBanner.src = banner;
+                var imgLogo = document.getElementById('PreviewImageLogo');
+                imgLogo.src = logo;
+                $('html,body').animate({
+                    scrollTop: $("#principal").offset().top
+                }, 1000)
+                swal("El documento es:", docu, "success");
+
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+
+    };
+    function Eliminar(id, val) {
+        var men = "";
+        var men2 = ""
+        if (val == 1) {
+            men = "Si desactivas ya no aparecera de la página";
+            men2 = "Se detuvo la desactivación";
+        }
+        else {
+            men = "Si activas aparecera en la página";
+            men2 = "Se detuvo la activación";
+        }
+        swal({
+            title: "¿ Estas seguro(a) ?",
+            text: men,
+            icon: "warning",
+            buttons: ["Calcelar", true],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var dataString = new FormData();
+                    dataString.append("id", id);
+                    dataString.append("val", val);
+                    $.ajax({
+                        url: "/Articulos/EstatusMarca",
+                        type: "POST", data: dataString, contentType: false, processData: false, async: false,
+                        success: function (respuesta) {
+                            if (typeof (respuesta.Value) != "undefined") {
+                                if (respuesta.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = respuesta.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    //limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (respuesta.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error regresa en Success no es definido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                } else {
+                    swal(men2, {
+                        icon: "info",
+                    });
+                }
+            });
+    };
+    function LimpiarCampos() {
+        var imgantiguo = "../Style/images/picture.png"
+        var imgBanner = document.getElementById('PreviewImageID');
+        var imgLogo = document.getElementById('PreviewImageLogo');
+        imgBanner.src = imgantiguo;
+        imgLogo.src = imgantiguo;
+        $("#formulario")[0].reset();
+    };
+    $(document).ready(function () {
+        tabla();
+        $("#btn-cancel").click(function () {
+            LimpiarCampos();
+        });
+        $("#btn-enviar").click(function () {
+            var cod = $("#cod").val();
+            var nom = $("#nombre").val();
+            var desc = $("#descripcion").val();
+            var slogan = $("#frase").val();
+            var logo = ($("#logo"))[0].files[0];
+            var banner = ($("#banner"))[0].files[0];
+            if (cod.length == 0) {
+                //Es nuevo
+                //swal("Bien", "Es nuevo", "success");
+                if (nom.length == 0 || desc.length == 0 || slogan.length == 0 || !logo || !banner) {
+                    swal("Aviso", "No puedes dejar campos vacios", "info");
+                }
+                else {
+                    swal("Bien", "Aquí se guarda", "success");
+                }
+            }
+            else {
+               //Es Modificacion 
+                //Si no hay ninguna imagen Se actualiza solo datos
+                if (!logo && !banner) {
+                    swal("Bien", "Solo Datos", "success");
+                } else {
+                    //Si logo tiene y banner no
+                    if (logo && !banner) {
+                        swal("Bien", "Logo y Datos", "success");
+                    }
+                    else {
+                        //Si banner tiene y logo no 
+                        if (!logo && banner) {
+                            swal("Bien", "Banner y Datos", "success");
+                        }
+                        else {
+                            //efuardan las 2 imagenes y Datos
+                            if (logo && banner) {
+                                swal("Bien", "Banner,Logo y Datos", "success");
+                            }
+                        }
+                        
+                    }
+                }
+            }
+
+
+        });
+
+
+    });
+
+
+
+</script>
+
+
+

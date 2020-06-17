@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "DatosEmpresa";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+<script src="~/Style/vendor/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<div id="principal" class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Página WEB > Datos de la Empresa
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-2">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="cod" name="cod" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Nombre de la Empresa</small>
+                                        <input type="text" id="nombre" name="nombre" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <small style="font-size:medium;" class="form-text text-muted">Teléfono</small>
+                                        <input type="text" id="tel" name="tel" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Dirección</small>
+                                        <input type="text" id="direc" name="direc" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Correo Electrónico</small>
+                                        <input type="text" id="correo" name="correo" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Sitio WEB</small>
+                                        <input type="text" id="sitio" name="sitio" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Descripción</small>
+                                        <textarea name="descri" id="descri" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Misión</small>
+                                        <textarea name="mision" id="mision" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Visión</small>
+                                        <textarea name="vision" id="vision" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-12">
+                                        <small style="font-size:medium;" class="form-text text-muted">Valores</small>
+                                        <textarea name="valores" id="valores" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button type="reset" id="btn-enviar" class="btn btn-primary btn-sm">
+                                <i class="fa fa-floppy-o"></i> Guardar
+                            </button>
+                            <a href="/" id="btn-cancelar" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function obtenerDatos() {
+        $.ajax({
+            url: "/PaginaWEB/obtenerEmpresa",
+            type: "POST",
+            data: false, contentType: false, processData: false, async: false,
+            success: function (result) {
+                var cod = result.listEmpre[0].idEmpresa;
+                var nom = result.listEmpre[0].nombre;
+                var desc = result.listEmpre[0].descripcion;
+                var direc = result.listEmpre[0].direccion;
+                var tel = result.listEmpre[0].telefono;
+                var cor = result.listEmpre[0].correo;
+                var sit = result.listEmpre[0].sitio;
+                var mis = result.listEmpre[0].mision;
+                var vis = result.listEmpre[0].vision;
+                var val = result.listEmpre[0].valores;
+                $("#cod").val(cod);
+                $("#nombre").val(nom);
+                $("#descri").val(desc);
+                $("#direc").val(direc);
+                $("#tel").val(tel);
+                $("#correo").val(cor);
+                $("#sitio").val(sit);
+                $("#mision").val(mis);
+                $("#vision").val(vis);
+                $("#valores").val(val);
+                //swal("Listo", "Datos obtenidos correctamente", "success");
+            },
+            error: function (mensaje) {
+                swal("Ops", "Ocurrio un erro :&nbsp;" + mensaje, "error");
+            }
+        });
+    };
+
+    $(document).ready(function () {
+        obtenerDatos();
+        $("#btn-enviar").click(function () {
+            var cod = $("#cod").val();
+            var nom = $("#nombre").val();
+            var desc = $("#descri").val();
+            var direc = $("#direc").val();
+            var tel = $("#tel").val();
+            var correo = $("#correo").val();
+            var sit = $("#sitio").val();
+            var mis = $("#mision").val();
+            var vis = $("#vision").val();
+            var val = $("#valores").val();
+            //condicional if si algun campo esta vacio
+            if (cod.length == 0 || nom.length == 0 || desc.length == 0 || direc.length == 0 || tel.length == 0 || correo.length == 0 || sit.length == 0 || mis.length == 0 || vis.length == 0 || val.length == 0) {
+                swal("Aviso", "No puede dejar algun campo vacio", "info");
+                obtenerDatos();
+            }
+            //Condicional else si todos los campos tiene informacion
+            else {
+                var dataString = new FormData();
+                dataString.append("nombre", nom)
+                dataString.append("desc", desc);
+                dataString.append("direc", direc);
+                dataString.append("tel", tel);
+                dataString.append("correo", correo);
+                dataString.append("sitio", sit);
+                dataString.append("mision", mis);
+                dataString.append("vision", vis);
+                dataString.append("valores", val);
+                dataString.append("id", cod);
+                $.ajax({
+                    url: "/PaginaWEB/actualizarEmpresa",
+                    type: "POST",
+                    data: dataString,
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    success: function (data) {
+                        if (typeof (data.Value) != "undefined") {
+                            if (data.Value == true) {
+                                var titulo = "Listo";
+                                var mensaje = data.Message;
+                                var tipo = "success";
+                                swal(titulo, mensaje, tipo);
+                                obtenerDatos();
+                                $('html,body').animate({
+                                    scrollTop: $("#principal").offset().top
+                                }, 1000)
+                            } else {
+                                if (data.Value == false) {
+                                    var titulo = "Oops";
+                                    var mensaje = data.Message;
+                                    var tipo = "error";
+                                    swal(titulo, mensaje, tipo);
+                                }
+
+                            }
+                        }
+                        else {
+                            swal("Oops", "Error Definido Data.Value=nodefinido", "error");
+                        }
+                    },
+                    error: function (data) {
+                        swal("Oops", "Error Definido sin respuesta de Servidor despues del success", "error");
+                    }
+
+                });
+
+            }
+        });
+
+
+    });
+
+</script>
+

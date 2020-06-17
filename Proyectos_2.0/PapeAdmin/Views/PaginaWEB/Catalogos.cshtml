@@ -1,0 +1,452 @@
+﻿
+@{
+    ViewBag.Title = "Catalogos";
+    Layout = "~/Views/Master/Sistema.cshtml";
+}
+
+<script src="~/Style/vendor/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<div id="principal" class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div style="font-size:x-large;" class="card-header">
+                            Página WEB > Actualizacion de Catálogos
+                        </div>
+                        
+                        <form action="" id="formulario" name="formulario" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-2">
+                                        <small style="font-size:medium;" class="form-text text-muted">Código</small>
+                                        <input disabled type="text" id="cod" name="cod" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Nombre del Catálogo</small>
+                                        <input type="text" id="nombre" name="nombre" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <small style="font-size:medium;" class="form-text text-muted">Fecha de Actualización</small>
+                                        <input disabled type="text" id="fecha" name="fecha" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-6">
+                                        <small style="font-size:medium;" class="form-text text-muted">Archivo .PDF</small>
+                                        <input type="file" id="file" accept=".pdf" name="file" class="form-control-file" onchange="PreviewImage(event)">
+                                        <br />
+                                        @*Progress bar syle.with=es cuanto ya cargo en la barra y el value es el porcentaje escrito*@
+                                        <div class="progress mb-3">
+                                            <div id="progreso" class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                                 role="progressbar" style="width:0%;">
+                                                0%
+                                            </div>
+                                        </div>
+                                        <input style="display:none;" disabled type="text" id="estatus" name="estatus" class="form-control" />
+                                        @*<progress class="progress-bar bg-info progress-bar-striped progress-bar-animated" id="progress" value="0"></progress><span id="display"></span>*@
+                                        
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <img style="width: 350px; height: 200px" id="PreviewImageID" src="~/Style/images/upload-file.png">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" id="btn-enviar" class="btn btn-success btn-sm">
+                                    <i class="fa fa-floppy-o"></i> Guardar
+                                </button>
+                                <button type="button" id="btn-cancel" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Ultima actualización</th>
+                                    <th>Estatus</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpo">
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>Mobile</td>
+                                    <td>iPhone X 64Gb Grey</td>
+                                    <td class="process">Processed</td>
+                                    <td>$999.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function PreviewImage(event) {
+        var output = document.getElementById('PreviewImageID');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        var ruta = URL.createObjectURL(event.target.files[0]);
+
+    };
+    function tabla() {
+        $.ajax({
+            url: "/PaginaWEB/obtenerCatalogos",
+            type: "POST",
+            data: false, contentType: false, processData: false, async: false,
+            success: function (result) {
+                $("#cuerpo").empty();
+                for (var i = 0; i < result.listCat.length; i++) {
+                    var stat;
+                    var txt;
+                    var btn;
+                    var icon;
+                    var color;
+                    var clase;
+                    if (result.listCat[i].statusCat == 1) {
+                        stat = "Activo";
+                        txt = "Desactivar";
+                        btn = "danger";
+                        icon = "fa-times";
+                        color = "process";
+                        clase = "";
+                        
+                    } else {
+                        stat = "Inactivo";
+                        txt = "&nbsp;&nbsp;Activar&nbsp;&nbsp;&nbsp;&nbsp;";
+                        btn = "success";
+                        icon = "fa-check";
+                        color = "";
+                        clase = "status--denied";
+                    }
+                    tr = $('<tr/>');
+                    tr.append("<td>" + result.listCat[i].idCatalogo + "</td>");
+                    tr.append("<td>" + result.listCat[i].nombreCat + "</td>");
+                    tr.append("<td>" + result.listCat[i].fechaCat + "</td>");
+                    tr.append("<td class='" + color + "'><span class='" + clase + "'>" + stat + "</span></td>");
+                    //Botones
+                    tr.append("<td style='text-align:right;' class='justify-content-center'><button type='reset' onclick='seleccionar(" + result.listCat[i].idCatalogo + "); return false'  class='btn btn-primary btn-sm'><i class='fa fa-pencil-square-o'></i>&nbsp;Editar</button>" + "&nbsp;&nbsp;&nbsp;" +
+                        "<button type='reset' onclick='eliminar(" + result.listCat[i].idCatalogo + "," + result.listCat[i].statusCat + "); return false' class='btn btn-" + btn + " btn-sm'><i class='fa " + icon + "'></i>&nbsp;" + txt + "</button>");
+                    $("#cuerpo").append(tr);
+                }
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+    };
+    function limpiarCampos() {
+        var imgantiguo = "../Style/images/upload-file.png"
+        var output = document.getElementById('PreviewImageID');
+        output.src = imgantiguo;
+        $("#formulario")[0].reset();
+    };
+    function seleccionar(id) {
+        var dataString = new FormData();
+        dataString.append("id", id)
+        $.ajax({
+            url: "/PaginaWEB/obtenerCatSelect",
+            type: "POST",
+            data: dataString, contentType: false, processData: false, async: false,
+            success: function (result) {
+                var codigo = result.catSelec[0].idCatalogo;
+                var nom = result.catSelec[0].nombreCat;
+                var fch = result.catSelec[0].fechaCat;
+                var docu = result.catSelec[0].docuCat;
+                var esta = result.catSelec[0].statusCat;
+                $("#cod").val(codigo);
+                $("#nombre").val(nom);
+                $("#fecha").val(fch);
+                $("#estatus").val(esta);
+                $('html,body').animate({
+                    scrollTop: $("#principal").offset().top
+                }, 1000)
+                swal("El documento es:", docu, "success");
+
+            },
+            error: function (mensaje) {
+                swal("Ops", mensaje, "error")
+            }
+        });
+
+    };
+    function obtenerDatosNuevo() {
+        var fd = new FormData();
+        var pdf = ($("#file"))[0].files[0];
+        var nom = ($("#nombre").val());
+        fd.append("pdf", pdf);
+        fd.append("nombre", nom);
+        return fd;
+    }
+    function obtenerDatosModiTot() {
+        var fd = new FormData();
+        var pdf = ($("#file"))[0].files[0];
+        var nom = ($("#nombre").val());
+        var id = ($("#cod").val());
+        fd.append("pdf", pdf);
+        fd.append("nombre", nom);
+        fd.append("id", id);
+        return fd;
+    }
+    function obtenerDatosModiNom() {
+        var fd = new FormData();
+        var nom = ($("#nombre").val());
+        var id = ($("#cod").val());
+        fd.append("nombre", nom);
+        fd.append("id", id);
+        return fd;
+    }
+    function upload(data) {
+        var progresoBar = document.getElementById("progreso");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/PaginaWEB/guardarCat", true);
+        xhr.onreadystatechange = function () {
+            //Accuib que se hace cuando termina y esta correcto la llamada del servidor
+            console.log("antes de la consulta");
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var result = JSON.parse(xhr.responseText);
+                console.log(result);
+                if (result.Value == true) {
+                    progresoBar.style.width = "0%";
+                    progresoBar.innerText = "";
+                    limpiarCampos();
+                    tabla();
+                    swal("Bien", result.Message, "success");
+
+                }
+                else {
+                    swal("Opd", "Error success" + result.Message, "error");
+                }
+
+            }
+            else {
+                swal("Ops", "Ocurrio un error con el servidor", "error");
+            }
+        };
+        if (xhr.upload) {
+            xhr.upload.onprogress = function (e) {
+                //Accion que se hace mientras esta em proceso el ajax osea trabajando en 2do plano
+                if (e.lengthComputable) {
+                    progresoBar.style.width = Math.floor((e.loaded / e.total) * 100) + '%';
+                    progresoBar.innerText = Math.floor((e.loaded / e.total) * 100) + '%';
+                }
+            }
+            xhr.upload.onloadstart = function (e) {
+                //Acciones que se hacen cuando empieza el ajax(Siempre se hace)
+            }
+            xhr.upload.onloadend = function (e) {
+                //Acciones que se hacen cuando termina el ajax (Success o Error siempre se hace)
+            }
+        }
+        xhr.send(data);
+    }
+    function ModificarTot(data) {
+        var progresoBar = document.getElementById("progreso");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/PaginaWEB/ModificarTodo", true);
+        xhr.onreadystatechange = function () {
+            //Accuib que se hace cuando termina y esta correcto la llamada del servidor
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var result = JSON.parse(xhr.responseText);
+                console.log(result);
+                if (result.Value == true) {
+                    progresoBar.style.width = "0%";
+                    progresoBar.innerText = "";
+                    limpiarCampos();
+                    tabla();
+                    swal("Bien", result.Message, "success");
+
+                }
+                else {
+                    swal("Opd", "Error success" + result.Message, "error");
+                }
+
+            }
+            else {
+                swal("Ops", "Ocurrio un error con el servidor", "error");
+            }
+        };
+        if (xhr.upload) {
+            xhr.upload.onprogress = function (e) {
+                //Accion que se hace mientras esta em proceso el ajax osea trabajando en 2do plano
+                if (e.lengthComputable) {
+                    progresoBar.style.width = Math.floor((e.loaded / e.total) * 100) + '%';
+                    progresoBar.innerText = Math.floor((e.loaded / e.total) * 100) + '%';
+                }
+            }
+            xhr.upload.onloadstart = function (e) {
+                //Acciones que se hacen cuando empieza el ajax(Siempre se hace)
+            }
+            xhr.upload.onloadend = function (e) {
+                //Acciones que se hacen cuando termina el ajax (Success o Error siempre se hace)
+            }
+        }
+        xhr.send(data);
+    }
+    function ModificarNom(data) {
+        var progresoBar = document.getElementById("progreso");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/PaginaWEB/ModificarNombre", true);
+        xhr.onreadystatechange = function () {
+            //Accuib que se hace cuando termina y esta correcto la llamada del servidor
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var result = JSON.parse(xhr.responseText);
+                console.log(result);
+                if (result.Value == true) {
+                    progresoBar.style.width = "0%";
+                    progresoBar.innerText = "";
+                    limpiarCampos();
+                    tabla();
+                    swal("Bien", result.Message, "success");
+
+                }
+                else {
+                    swal("Opd", "Error success" + result.Message, "error");
+                }
+
+            }
+            else {
+                swal("Ops", "Ocurrio un error con el servidor", "error");
+            }
+        };
+        if (xhr.upload) {
+            xhr.upload.onprogress = function (e) {
+                //Accion que se hace mientras esta em proceso el ajax osea trabajando en 2do plano
+                if (e.lengthComputable) {
+                    progresoBar.style.width = Math.floor((e.loaded / e.total) * 100) + '%';
+                    progresoBar.innerText = Math.floor((e.loaded / e.total) * 100) + '%';
+                }
+            }
+            xhr.upload.onloadstart = function (e) {
+                //Acciones que se hacen cuando empieza el ajax(Siempre se hace)
+            }
+            xhr.upload.onloadend = function (e) {
+                //Acciones que se hacen cuando termina el ajax (Success o Error siempre se hace)
+            }
+        }
+        xhr.send(data);
+    }
+    function eliminar(id, val) {
+        var men = "";
+        var men2 = ""
+        if (val == 1) {
+            men = "Si desactivas ya no aparecera de la página";
+            men2 = "Se detuvo la desactivación";
+        }
+        else {
+            men = "Si activas aparecera en la página";
+            men2 = "Se detuvo la activación";
+        }
+        swal({
+            title: "¿ Estas seguro(a) ?",
+            text: men,
+            icon: "warning",
+            buttons: ["Calcelar", true],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var dataString = new FormData();
+                    dataString.append("id", id);
+                    dataString.append("val", val);
+                    $.ajax({
+                        url: "/PaginaWEB/Estatus",
+                        type: "POST", data: dataString, contentType: false, processData: false, async: false,
+                        success: function (respuesta) {
+                            if (typeof (respuesta.Value) != "undefined") {
+                                if (respuesta.Value == true) {
+                                    var titulo = "Listo";
+                                    var mensaje = respuesta.Message;
+                                    var tipo = "success";
+                                    swal(titulo, mensaje, tipo);
+                                    limpiarCampos();
+                                    tabla();
+                                } else {
+                                    if (respuesta.Value == false) {
+                                        var titulo = "Oops";
+                                        var mensaje = data.Message;
+                                        var tipo = "error";
+                                        swal(titulo, mensaje, tipo);
+                                    }
+
+                                }
+                            }
+                            else {
+                                swal("Oops", "Error regresa en Success no es definido", "error");
+                            }
+                        },
+                        error: function (data) {
+                            swal("Oops", "Error Definido sin respuesta de Servidor", "error");
+                        }
+
+                    });
+                } else {
+                    swal(men2, {
+                        icon: "info",
+                    });
+                }
+            });
+    };
+    $(document).ready(function () {
+        tabla();
+        $("#btn-cancel").click(function () {
+            limpiarCampos();
+        });
+        $("#btn-enviar").click(function () {
+            var cod = ($("#cod").val());
+            var nom = ($("#nombre").val());
+            var pdf = ($("#file"))[0].files[0];
+            if (cod.length == 0) {
+                if (nom.length == 0 || !pdf) {
+                    swal("Aviso", "Obligatorio asignar un nombre y Archivo", "info");
+                }
+                else {
+                    upload(obtenerDatosNuevo());
+                }
+
+            } else {
+                //Movimientos para modificar
+                //Verificar vacios 
+                if (nom.length == 0) {
+                    swal("Aviso", "El catalogo debe tener un nombre");
+                }
+                else
+                {
+                    //Si tiene nombre pero no hay file nuevo
+                    if (!pdf) {
+                        ModificarNom(obtenerDatosModiNom());
+                    }
+                    //Si tiene nombre y file tambien
+                    else {
+                        ModificarTot(obtenerDatosModiTot());
+                    }
+                }
+
+            }
+        });
+    });
+
+    
+
+</script>
